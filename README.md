@@ -1,2 +1,1 @@
-# marz
-a instant mesaging application
+# Coding ...
