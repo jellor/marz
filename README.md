@@ -1,5 +1,9 @@
 # Coding ...
 
+## 系统架构
+
+![image](doc/架构图.png)
+
 ## 计划表
 
 1. 数据持久层使用分布式数据库TiDB/CockroachDB替换单点数据库MySQL.
