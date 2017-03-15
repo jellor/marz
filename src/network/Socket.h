@@ -26,7 +26,7 @@ public:
 	void SetFd(int sockfd) { sockfd_ = sockfd; }
 	bool Available() const { return sockfd_ != -1 ? true : false; }
 	
-	int	Bind(const IpAddress& IpAddress);
+	int Bind(const IpAddress& IpAddress);
 	int Listen();
 	int Accept(IpAddress* IpAddress);
 	int Connect(const IpAddress& IpAddress);
