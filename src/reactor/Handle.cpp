@@ -30,7 +30,7 @@ void Handle::Reset() {
 	fd_         	= -1;
 	status_     	= NEW;
 	readable_   	= false;
-	writable_  	 	= false;
+	writable_  	= false;
 	read_callback_  = NULL;
 	write_callback_ = NULL;
 	close_callback_ = NULL;
@@ -43,7 +43,7 @@ void Handle::Reset(EventLoop* event_loop, int fd) {
 	fd_         	= fd;
 	status_     	= NEW;
 	readable_   	= false;
-	writable_  	 	= false;
+	writable_  	= false;
 	read_callback_  = NULL;
 	write_callback_ = NULL;
 	close_callback_ = NULL;
