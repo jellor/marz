@@ -337,7 +337,12 @@ function print_help() {
 case $1 in 
 	bin)
 		echo "build bin"
-		#build_bin
+		build_group
+		build_login
+		build_message
+		build_relation
+		build_session
+		build_user
 		;;
 
 	run) 

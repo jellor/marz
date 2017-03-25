@@ -1,4 +1,5 @@
 #include <signal.h>
+#include "Svr.h"
 #include "BalanceHandler.h"
 #include "RouteHandler.h"
 #include "ClientHandler.h"
@@ -25,11 +26,11 @@ uint16_t real_route_port = 0;
 class GatewaySvr : public Svr {
 public:
 	GatewaySvr() {
-		DEBUG << "Balance Service Constructor ......";
+		DLOG << "Balance Service Constructor ......";
 	}
 
 	~GatewaySvr() {
-		DEBUG << "Balance Service Destructor ......";
+		DLOG << "Balance Service Destructor ......";
 	}
 
 	virtual Handler* CreateHandler(const ChannelPtr& channel_ptr) override {
@@ -40,9 +41,9 @@ public:
             handler = new ClientHandler(channel_ptr);
         } else if ((channel_ptr->GetLocalAddress().Port() == real_console_listen_port)) {
         	// handler = new ConsoleHandler();
-        } else if ((channel_ptr->GetPeerAddress().port() == real_balance_port)) {
+        } else if ((channel_ptr->GetPeerAddress().Port() == real_balance_port)) {
             handler = new BalanceHandler(channel_ptr);
-        } else if ((channel_ptr->getPeerAddress().port() == real_route_port)) {
+        } else if ((channel_ptr->GetPeerAddress().Port() == real_route_port)) {
             handler = new RouteHandler(channel_ptr);
         } else {
         	WLOG << "Create Handler Failed";
@@ -61,32 +62,32 @@ int main(int argc, char* argv[]) {
 
 	Config config("gateway_svr.conf");
 	
-	const char* client_listen_hosts = config.getValueByName("ClientListenHosts");
-	const char* client_listen_port = config.getValueByName("ClientListenPort");
-	const char* console_listen_hosts = config.getValueByName("ConsoleListenHosts");
-	const char* console_listen_port = config.getValueByName("ConsoleListenPort");
-	const char* balance_hosts = config.getValueByName("BalanceHosts");
-	const char* balance_port = config.getValueByName("BalancePort");
-	const char* route_hosts = config.getValueByName("RouteHosts");
-	const char* route_port = config.getValueByName("RoutePort");
+	const char* client_listen_hosts = config.GetValueByName("ClientListenHosts");
+	const char* client_listen_port = config.GetValueByName("ClientListenPort");
+	const char* console_listen_hosts = config.GetValueByName("ConsoleListenHosts");
+	const char* console_listen_port = config.GetValueByName("ConsoleListenPort");
+	const char* balance_hosts = config.GetValueByName("BalanceHosts");
+	const char* balance_port = config.GetValueByName("BalancePort");
+	const char* route_hosts = config.GetValueByName("RouteHosts");
+	const char* route_port = config.GetValueByName("RoutePort");
 
 	g_msg_cnt_per_sec = 0;
 
     g_cur_connect_num = 0;
-	g_max_connect_num = atoi(config.getValueByName("MaxConnectCnt"));
+	g_max_connect_num = atoi(config.GetValueByName("MaxConnectCnt"));
 
 	if (client_listen_hosts == NULL || client_listen_port == NULL 
 		|| console_listen_hosts == NULL || console_listen_port == NULL
 		|| balance_hosts == NULL || balance_port == NULL 
-		|| route_hosts == NULL || route_port == NULL || db_hosts == NULL || db_port == NULL) {
-		WARN << "Error : gateway_svr.conf Failed";
-		WARN << client_listen_hosts << " " << client_listen_port 
+		|| route_hosts == NULL || route_port == NULL) {
+		WLOG << "Error : gateway_svr.conf Failed";
+		WLOG << client_listen_hosts << " " << client_listen_port 
 			<< " " << console_listen_hosts << " " << console_listen_port
 			<< " " << balance_hosts << " " << balance_port
 			<< " " << route_hosts << " " << route_port;
 		return 1;
 	} else {
-		DEBUG << client_listen_hosts << " " << client_listen_port 
+		DLOG << client_listen_hosts << " " << client_listen_port 
 			<< " " << console_listen_hosts << " " << console_listen_port
 			<< " " << balance_hosts << " " << balance_port
 			<< " " << route_hosts << " " << route_port;
@@ -100,7 +101,7 @@ int main(int argc, char* argv[]) {
 	std::vector<IpAddress> listen_hosts;
 	std::vector<IpAddress> connect_hosts;
 
-	mars::StringSplit client_listen_host_list(client_listen_hosts, ';');
+	StringSplit client_listen_host_list(client_listen_hosts, ';');
 	for (int i = 0; i < client_listen_host_list.GetItemCount(); i ++) {
 		IpAddress host(client_listen_host_list.GetItem(i), real_client_listen_port);
 		listen_hosts.push_back(host);
@@ -108,19 +109,19 @@ int main(int argc, char* argv[]) {
 		g_client_listen_host = client_listen_host_list.GetItem(i); 
 	}
 
-	mars::StringSplit console_listen_host_list(console_listen_hosts, ';');
+	StringSplit console_listen_host_list(console_listen_hosts, ';');
 	for (int i = 0; i < console_listen_host_list.GetItemCount(); i ++) {
 		IpAddress host(console_listen_host_list.GetItem(i), real_console_listen_port);
 		listen_hosts.push_back(host);
 	}
 
-	mars::StringSplit balance_host_list(balance_hosts, ';');
+	StringSplit balance_host_list(balance_hosts, ';');
 	for (int i = 0; i < balance_host_list.GetItemCount(); i ++) {
 		IpAddress host(balance_host_list.GetItem(i), real_balance_port);
 		connect_hosts.push_back(host);
 	}
 
-	mars::StringSplit route_host_list(route_hosts, ';');
+	StringSplit route_host_list(route_hosts, ';');
 	for (int i = 0; i < route_host_list.GetItemCount(); i ++) {
 		IpAddress host(route_host_list.GetItem(i), real_route_port);
 		connect_hosts.push_back(host);
@@ -138,7 +139,7 @@ int main(int argc, char* argv[]) {
 	server->Start();
 
 	delete server;
-	DEBUG << "stop";
+	DLOG << "stop";
 	return 0;
 }
 

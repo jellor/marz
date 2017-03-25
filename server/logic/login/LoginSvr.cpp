@@ -26,10 +26,10 @@ uint16_t real_client_listen_port = 0;
 class LoginSvr : public Svr {
 public:
 	LoginSvr() {
-		DLOG << "Balance Svr Constructor ......";
+		DLOG << "LoginSvr Svr Constructor ......";
 	}
 	~LoginSvr() {
-		DLOG << "Balance Svr Destructor ......";
+		DLOG << "LoginSvr Svr Destructor ......";
 	}
 
 	virtual Handler* CreateHandler(const ChannelPtr& channel_ptr) {
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	const char* client_listen_port = config.GetValueByName("ClientListenPort");
 
 	if (client_listen_hosts == NULL || client_listen_port == NULL) {
-		WLOG << "Error : balance_service.conf Failed";
+		WLOG << "Error : login_svr.conf Failed";
 		WLOG << client_listen_hosts << " " << client_listen_port;
 		return 1;
 	} else {

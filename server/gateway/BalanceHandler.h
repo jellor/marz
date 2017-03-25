@@ -17,7 +17,7 @@ public:
 
 	void OnTimeout();
 
-	void NotifyBalanceSvr(const Im::Server::ServerUpdateNotity& notify)
+	void NotifyBalanceSvr(const Im::Server::ServerUpdateNotity& notify);
 
 private:
 	void SendServerInfo(const ChannelPtr& channel_ptr);

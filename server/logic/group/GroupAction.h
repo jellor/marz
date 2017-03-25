@@ -8,7 +8,12 @@ namespace marz {
 
 namespace Action {
 
-void Login(const ChannelPtr& channel_ptr, Packet *packet);
+void CreateGroup(const ChannelPtr& channel_ptr, Packet* packet);
+void GetNormalGroupList(const ChannelPtr& channel_ptr, Packet* packet);
+void GetGroupInfo(const ChannelPtr& channel_ptr, Packet* packet);
+void ModifyMember(const ChannelPtr& channel_ptr, Packet* packet);
+void SetGroupPush(const ChannelPtr& channel_ptr, Packet* packet);
+void GetGroupPush(const ChannelPtr& channel_ptr, Packet* packet);
 
 } // namespace action
 

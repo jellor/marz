@@ -2,6 +2,7 @@
 #define __CLIENT_MGR_H__
 
 #include <map>
+#include <string>
 #include "ClientHandler.h"
 #include "Mutex.h"
 
@@ -17,9 +18,15 @@ public:
 
 	void SendMsgToRouteSvr(const Message* message);
 
+	void AddHandler(const std::string& addr, ClientHandler* handler);
+	void DelHandler(const std::string& addr);
+
+	void SendToClient(Packet* packet);
+
 private:
 	std::map<uint32_t, ClientHandler*> client_map_;
-	mars::Mutex mutex_;
+	std::map<std::string, ClientHandler*> addr_map_;
+	Mutex mutex_;
 
 };
 

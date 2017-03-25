@@ -19,8 +19,10 @@ void Login(const ChannelPtr& channel_ptr, Packet* packet) {
 		response.set_user_name(user_name);
 		response.set_attach_data(request.attach_data());
 
+		std::string addr = IpAddress::ToString(packet->ip, packet->port);
+
 		Im::Base::UserInfo cur_user;
-		if (LoginModel::DoLogin(user_name, user_password, cur_user)) {
+		if (LoginModel::DoLogin(user_name, user_password, cur_user) && LoginModel::UpdateStatus(cur_user.user_id(), addr, 0)) {
 			Im::Base::UserInfo* user_ptr = response.mutable_user_info();
 			user_ptr->set_user_id(cur_user.user_id());
 			user_ptr->set_sex(cur_user.sex());
@@ -44,7 +46,7 @@ void Login(const ChannelPtr& channel_ptr, Packet* packet) {
 		response.set_result_string("服务器内部问题");
 	}
 
-	PacketHandler::SendMessage(Im::Base::SERVICE_OTHER, Im::Base::RES_VALIDATE, packet->sequence, &response, channel_ptr);
+	PacketHandler::SendMessage(packet->ip, packet->port, Im::Base::SERVICE_LOGIN, Im::Base::RES_VALIDATE, packet->sequence, &response, channel_ptr);
 
 	delete packet;
 }

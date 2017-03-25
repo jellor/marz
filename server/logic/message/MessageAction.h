@@ -8,7 +8,14 @@ namespace marz {
 
 namespace Action {
 
-void Login(const ChannelPtr& channel_ptr, Packet *packet);
+void SendMessage(const ChannelPtr& channel_ptr, Packet* packet);
+void GetMessage(const ChannelPtr& channel_ptr, Packet* packet);
+void GetMsgById(const ChannelPtr& channel_ptr, Packet* packet);
+void GetLatestMsgId(const ChannelPtr& channel_ptr, Packet* packet);
+void GetUnreadMsgCounter(const ChannelPtr& channel_ptr, Packet* packet);
+void ClearUnreadMsgCounter(const ChannelPtr& channel_ptr, Packet* packet);
+void SetDeviceToken(const ChannelPtr& channel_ptr, Packet* packet);
+void GetDeviceToken(const ChannelPtr& channel_ptr, Packet* packet);
 
 } // namespace Action
 

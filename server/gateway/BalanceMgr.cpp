@@ -1,11 +1,10 @@
 #include "BalanceMgr.h"
-#include "protobuf/Im.Server.pb.h"
+#include "protocolbuffer/Im.Server.pb.h"
 
 namespace marz {
 
 BalanceMgr::BalanceMgr():
 balance_map_(),
-channel_map_(),
 mutex_()
 {
 }
@@ -27,8 +26,8 @@ void BalanceMgr::DelHandler(uint32_t key) {
 
 void BalanceMgr::NotifyBalanceSvr(uint32_t action, uint32_t user_id) {
 	Im::Server::ServerUpdateNotity notify;
-	msg.set_action(action);
-	msg.set_user_id(user_id);
+	notify.set_action(action);
+	notify.set_user_id(user_id);
 	BalanceHandler* handler = NULL;
 	{
 		Lock lock(mutex_);

@@ -19,7 +19,7 @@ public:
 
 private:
 	std::map<uint32_t, BalanceHandler*> balance_map_;
-	mars::Mutex mutex_;
+	Mutex mutex_;
 
 };
 

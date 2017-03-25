@@ -1,10 +1,9 @@
 #ifndef __USER_MODEL_H__
 #define __USER_MODEL_H__
 
-#include "Im.Base.pb.h"
-
 #include <list>
 #include <map>
+#include "Im.Base.pb.h"
 #include "Types.h"
 
 namespace marz {

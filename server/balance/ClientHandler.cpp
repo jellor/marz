@@ -25,7 +25,7 @@ void ClientHandler::OnInactive(const ChannelPtr& channel_ptr) {
 
 void ClientHandler::OnReceive(const ChannelPtr& channel_ptr)  {
     if (http_context_.Decode(channel_ptr) == false) {
-        Close(channel_ptr);
+        Close();
     }
 }
 

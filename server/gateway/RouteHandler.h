@@ -1,15 +1,9 @@
 #ifndef __ROUTE_HANDLER_H__
 #define __ROUTE_HANDLER_H__
 
-#include "protobuf/Im.Other.pb.h"
-#include "protobuf/Im.Server.pb.h"
-#include "protobuf/Im.Login.pb.h"
-#include "protobuf/Im.Buddy.pb.h"
-
 #include "PacketHandler.h"
-#include "HandlerChain.h"
 
-using namespace mars;
+namespace marz {
 
 class RouteHandler : public PacketHandler {
 public:
@@ -23,12 +17,16 @@ public:
 	virtual void OnMessage(const ChannelPtr& channel_ptr, Packet* packet) override;
 
 	void OnTimeout();
-	void SendMsgToRouteSvr(int16_t service, int16_t command, int16_t sequence, const Message* message);
+
+	void HandleRouteSvr(Packet* packet);
 
 private:
 	int64_t id_;
 	bool master_id_;
+	TimerId timer_id_;
 
 };
 
-#endif
+} // namespace marz
+
+#endif // __ROUTE_HANDLER_H__

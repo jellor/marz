@@ -9,6 +9,7 @@ namespace marz {
 class LoginModel {
 public:
 	static bool DoLogin(const std::string& name, const std::string& password, Im::Base::UserInfo& user_info);
+	static bool UpdateStatus(uint32_t uid, std::string addr, uint8_t status);
 };
 
 } // namespace marz

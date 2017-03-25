@@ -8,7 +8,8 @@ namespace marz {
 
 namespace Action {
 
-void Login(const ChannelPtr& channel_ptr, Packet *packet);
+void GetUserInfo(const ChannelPtr& channel_ptr, Packet* packet);
+void GetChangeUser(const ChannelPtr& channel_ptr, Packet* packet);
 
 } // namespace action
 

@@ -3,6 +3,7 @@
 #include "DatabaseManager.h"
 #include "Logger.h"
 #include "Md5.h"
+#include "Util.h"
 
 namespace marz {
 
@@ -74,6 +75,29 @@ bool LoginModel::DoLogin(const std::string& name, const std::string& password, I
 	}
 
 	return ret;
+}
+
+bool LoginModel::UpdateStatus(uint32_t uid, std::string addr, uint8_t status) {
+	CacheConnector *cache_connector = CacheManager::GetConnector("login");
+	if (cache_connector != NULL) {
+		
+		std::string key = "login_" + Util::Uint32ToString(uid);
+		if (!cache_connector->Hdel(key, addr)) {
+			WLOG << "hdel key => " << key << ", addr => " << addr << " is failed";
+			return false;
+		}
+	
+		if (!cache_connector->Hset(key, addr, Util::Uint32ToString(status))) {
+			WLOG << "hset key => " << key << ", addr => " << addr << " is failed";
+			return false;
+		}
+		
+		CacheManager::ReleaseConnector(cache_connector);
+		return true;
+	} else {
+		WLOG << "cache connector is NULL";
+	}
+	return false;
 }
 
 } // namespace marz

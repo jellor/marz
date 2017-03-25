@@ -1,5 +1,9 @@
-#include "protocolbuffer/Im.Session.pb.h"
+#include <list>
+#include "Im.Session.pb.h"
 #include "SessionAction.h"
+#include "SessionModel.h"
+#include "UserModel.h"
+#include "Types.h"
 
 namespace marz {
 
@@ -51,7 +55,7 @@ void DelRecentSession(const ChannelPtr& channel_ptr, Packet *packet) {
 		if (Im::Base::SessionType_IsValid(session_type)) {
 			bool ret = false;
 			uint32_t session_id = SessionModel::GetInstance()->GetSessionId(user_id, peer_id, session_type, false);
-			if (session_id != mars::INVALID_VALUE) {
+			if (session_id != INVALID_VALUE) {
 				ret = SessionModel::GetInstance()->RemoveSession(session_id);
 				if (ret) {
 					UserModel::GetInstance()->ClearUserCounter(user_id, peer_id, session_type);

@@ -2,7 +2,7 @@
 #define __ROUTE_MGR_H__
 
 #include <map>
-#include "ClientHandler.h"
+#include "RouteHandler.h"
 #include "Mutex.h"
 
 namespace marz {
@@ -15,11 +15,12 @@ public:
 	void AddHandler(uint32_t key, RouteHandler* handler);
 	void DelHandler(uint32_t key);
 
-	void SendMsgToRouteSvr(int16_t service, int16_t command, int16_t sequence, const Message* message);
+	void SendToRouteSvr(uint32_t ip, uint16_t port, 
+		int16_t service, int16_t command, int16_t sequence, const Message* message);
 
 private:
 	std::map<uint32_t, RouteHandler*> route_map_;
-	mars::Mutex mutex_;
+	Mutex mutex_;
 
 };
 

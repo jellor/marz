@@ -30,9 +30,9 @@ void UserModel::GetChangedId(uint32_t& last_time, std::list<uint32_t>& id_list) 
 	
 	std::string sql;
 	if (last_time == 0) {
-		sql = "SELECT id, updated FROM ImUser WHERE status!=3";
+		sql = "SELECT id, updated FROM ImUser WHERE status !=3";
 	} else {
-		sql = "SELECT id, updated FROM ImUser WHERE updated>=" + Util::Uint32ToString(last_time);
+		sql = "SELECT id, updated FROM ImUser WHERE updated >=" + Util::Uint32ToString(last_time);
 	}
 
 	DatabaseConnector* db_connector = DatabaseManager::GetConnector("database_master");
