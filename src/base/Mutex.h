@@ -1,9 +1,11 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
+#include <errno.h>
 #include <pthread.h>
 #include "NonCopyable.h"
 #include "Exception.h"
+#include "Logger.h"
 
 namespace marz {
 
@@ -32,12 +34,16 @@ private:
 
 inline void Mutex::Lock() {
 	if (0 != pthread_mutex_lock(&mutex_)) {
+		WLOG << "errno => " << errno;
+		WLOG << "errno => " << Logger::GetError();
 		throw Exception("Cannot Lock Mutex");
 	}
 }
 
 inline void Mutex::Unlock() {
 	if (0 != pthread_mutex_unlock(&mutex_)) {
+		WLOG << "errno => " << errno;
+		WLOG << "errno => " << Logger::GetError();
 		throw Exception("Cannot Unlock Mutex");
 	}
 }

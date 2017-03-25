@@ -32,10 +32,11 @@ uint16_t IpAddress::Port() const {
 	return ntohs(addr_.sin_port);
 }
 
-std::string IpAddress::Ip() const {
-	char ipBuf[32];
-	inet_ntop(AF_INET, &addr_.sin_addr, ipBuf, sizeof(ipBuf));
-	return ipBuf;
+uint32_t IpAddress::Ip() const {
+	// char ipBuf[32];
+	// inet_ntop(AF_INET, &addr_.sin_addr, ipBuf, sizeof(ipBuf));
+	// return ipBuf;
+	return ntohl(addr_.sin_addr.s_addr);
 }
 
 std::string IpAddress::ToString() const {
@@ -48,6 +49,12 @@ std::string IpAddress::ToString() const {
 
 bool IpAddress::operator ==(const IpAddress& rhs) const {
 	return addr_.sin_port == rhs.addr_.sin_port && addr_.sin_addr.s_addr == rhs.addr_.sin_addr.s_addr;
+}
+
+std::string IpAddress::ToString(uint32_t ip, uint16_t port) {
+	char buf[32];
+	snprintf(buf, sizeof(buf), "%d.%d.%d.%d:%d", ip >> 24, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF, port);
+	return buf;
 }
 
 } // namespace marz

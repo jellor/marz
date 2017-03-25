@@ -7,12 +7,12 @@ namespace marz {
 
 class TimerId {
 public:
-	TimerId(Timer* timer, int64_t sequence): timer_(timer), sequence_(sequence) {}
+	TimerId(Timer* timer = NULL, int64_t sequence = -1): timer_(timer), sequence_(sequence) {}
 	Timer* GetTimer() const { return timer_; }
 
 private:
-	Timer* const timer_;
-	const uint64_t sequence_;
+	Timer* timer_;
+	int64_t sequence_;
 
 };
 

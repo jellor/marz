@@ -43,6 +43,12 @@ public:
 	
 	int16_t ReadInt16();
 	int32_t ReadInt32();
+
+	uint16_t GetUint16();
+	uint32_t GetUint32();
+	
+	uint16_t ReadUint16();
+	uint32_t ReadUint32();
 	
 private:
 	unsigned int head_index; // ? signed int head_index

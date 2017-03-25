@@ -10,9 +10,9 @@ namespace marz {
 const std::string Exception::ToString() const noexcept {
 	std::stringstream ss("");
 	if (!what_.empty()) {
-		ss << "What: " << what_ << "  |  ";
+		ss << "What: " << what_;
 	}
-	ss << "Stack Trace: " << GetStackTrace();
+	ss << "\nStack Trace: \n" << GetStackTrace();
 	return ss.str();
 }
 

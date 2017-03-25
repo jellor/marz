@@ -22,11 +22,13 @@ public:
 
 	void Reset();
 	uint16_t Port() const;
-	std::string Ip() const;
+	uint32_t Ip() const;
 	std::string ToString() const;
 	void SetAddr(const struct sockaddr_in& addr) { addr_ = addr; }
 	const struct sockaddr_in& GetAddr() const { return addr_; }
 	bool operator ==(const IpAddress& rhs) const;
+
+	static std::string ToString(uint32_t ip, uint16_t port);
 
 private:
 	struct sockaddr_in addr_;

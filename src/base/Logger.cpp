@@ -31,7 +31,8 @@ logger_stream_()
 		"%4d-%02d-%02d %02d:%02d:%02d.%06d ", 
 		tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, tv.tv_usec);
 	logger_stream_ << buf;
-	const char* file_name = file; //strrchr(file, '/');
+	const char* file_name = strrchr(file, '/');
+	// const char* file_name = file;
 	if (file_name == NULL) {
 		file_name = file;
 	} else {

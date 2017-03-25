@@ -33,6 +33,31 @@ void Handler::OnError(const ChannelPtr& channel_ptr) {
 
 /*---------------------------------- Down Stream ----------------------------------*/
 
+void Handler::Send(const char* data, int len) {
+	DLOG << "Send";
+	channel_ptr_->Send(data, len);
+}
+
+void Handler::Send(const RingBuffer* buffer) {
+	DLOG << "Send";
+	channel_ptr_->Send(buffer);
+}
+
+void Handler::ShutdownReceive() {
+	DLOG << "Shutdown Receive";
+	channel_ptr_->ShutdownReceive();
+}
+
+void Handler::ShutdownSend() {
+	DLOG << "Shutdown Send";
+	channel_ptr_->ShutdownSend();
+}
+
+void Handler::Close() {
+	DLOG << "Close Channel";
+	channel_ptr_->Close();
+}
+
 void Handler::Send(const ChannelPtr& channel_ptr, const char* data, int len) {
 	DLOG << "Send";
 	channel_ptr->Send(data, len);

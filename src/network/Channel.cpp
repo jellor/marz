@@ -56,9 +56,11 @@ void Channel::Close() {
 
 void Channel::CloseInEventLoop() {
     DLOG << "Close In Event Loop";
-    opened_ = false;
-
-    socket_.Close();
+    if (opened_) {
+        opened_ = false;
+        socket_.Close();
+        delete handler_;
+    }
 }
 
 std::string Channel::ToString() const {
@@ -170,7 +172,7 @@ void Channel::HandleReadEvent() {
             close_callback_(shared_from_this());
         }
 
-        if (opened_ == true) {
+        if (opened_) {
             Close();
         }
 

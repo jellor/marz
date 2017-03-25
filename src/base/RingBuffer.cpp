@@ -232,4 +232,32 @@ int32_t RingBuffer::ReadInt32() {
 	return retVal;
 }
 
+uint16_t RingBuffer::GetUint16() {
+	Adjust();
+    uint16_t retVal = *((uint16_t*)(buffer_ + head_index));
+    return retVal;
+}
+
+uint32_t RingBuffer::GetUint32() {
+	Adjust();
+	uint32_t retVal = *((uint32_t*)(buffer_ + head_index));
+	return retVal;
+}
+
+uint16_t RingBuffer::ReadUint16() {
+	Adjust();
+	uint16_t retVal = *((uint16_t*)(buffer_ + head_index));
+	head_index += 2;
+	size_ -= 2;
+	return retVal;
+}
+
+uint32_t RingBuffer::ReadUint32() {
+	Adjust();
+	uint32_t retVal = *((uint32_t*)(buffer_ + head_index));
+	head_index += 4;
+	size_ -= 4;
+	return retVal;
+}
+
 } // namespace marz

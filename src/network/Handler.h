@@ -16,6 +16,12 @@ public:
 	virtual void OnInactive(const ChannelPtr& channel_ptr);
 	virtual void OnError(const ChannelPtr& channel_ptr);
 
+	virtual void Send(const char* data, int len);
+	virtual void Send(const RingBuffer* buffer);
+	virtual void ShutdownReceive();
+	virtual void ShutdownSend();
+	virtual void Close();
+
 	virtual void Send(const ChannelPtr& channel_ptr, const char* data, int len);
 	virtual void Send(const ChannelPtr& channel_ptr, const RingBuffer* buffer);
 	virtual void ShutdownReceive(const ChannelPtr& channel_ptr);

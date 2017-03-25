@@ -16,18 +16,19 @@ typedef google::protobuf::Message Message;
 typedef google::protobuf::Descriptor Descriptor;
 
 typedef struct Packet {
-    int32_t length;
+    int16_t length;
     int16_t version;
+    uint32_t ip;
+    uint16_t port;
     int16_t service;
     int16_t command;
     int16_t sequence;
-    int16_t reserve;
     char* 	data;
-    int32_t check_sum;
+    uint32_t check_sum;
 
     ~Packet() {
     	if (data != NULL) {
-    		DLOG << "Free packet.data ...";
+    		DLOG << "Free packet.data";
     		delete data;
     	}
     }
@@ -41,8 +42,12 @@ public:
 	virtual void OnReceive(const ChannelPtr& channel_ptr) override;
 	virtual void OnMessage(const ChannelPtr& channel_ptr, Packet* packet) = 0;
 
+    void SendPacket(Packet* packet);
 	void SendPacket(Packet* packet, const ChannelPtr& channel_ptr);
     void SendMessage(int16_t service, int16_t command, int16_t sequence, const Message* message);
+    static void SendMessage(uint32_t ip, uint16_t port, 
+        int16_t service, int16_t command, int16_t sequence, const Message* message, const ChannelPtr& channel_ptr);
+    void SendMessage(uint32_t ip, uint16_t port, int16_t service, int16_t command, int16_t sequence, const Message* message);
 	static void SendMessage(int16_t service, int16_t command, int16_t sequence, const Message* message, const ChannelPtr& channel_ptr);
 
 private:
@@ -59,13 +64,14 @@ private:
 
 #define PRINT_PACKET(packet)							\
 	do {												\
-   		DLOG << "[LEN : " << packet->length << ", "	\
+   		DLOG << "[LEN : " << packet->length << ", "	    \
             << "VER : " << packet->version << ", "		\
+            << "IP : " << packet->ip << ", "            \
+            << "PORT : " << packet->port << ", "        \
             << "SER : " << packet->service << ", "		\
             << "CMD : " << packet->command << ", "		\
             << "SEQ : " << packet->sequence << ", "		\
-            << "RES : " << packet->reserve << ", "		\
-            << "CHE : " << packet->checkSum<<"]";		\
+            << "CHE : " << packet->check_sum<<"]";		\
 	} while (0)
 
 #define PARSE_PACKET(msg, packet)	(msg).ParseFromArray((packet)->data, (packet)->length - 18)

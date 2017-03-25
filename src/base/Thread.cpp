@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/syscall.h> 
 #include <unistd.h>
 #include <errno.h>
@@ -81,11 +82,14 @@ void ThreadSpace::StartThread() {
 	try {
 		thread_func_();
 	} catch (const Exception& e) {
-
+		DLOG << e.ToString();
+		abort();
 	} catch (const std::exception& e) {
-
+		DLOG << e.what();
+		abort();
 	} catch (...) {
-
+		DLOG << "Thread Abort";
+		abort();
 	} 
 	
 }

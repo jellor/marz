@@ -207,7 +207,7 @@ void Bootstrap::HandleClose(const ChannelPtr& channel_ptr) {
 	Handler* handler = channel_ptr->GetHandler();
 	if (handler != NULL) {
 		handler->OnInactive(channel_ptr);
-		delete handler;
+		//delete handler;
 	}
 }
 
